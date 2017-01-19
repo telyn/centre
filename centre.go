@@ -1,27 +1,36 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 )
 
+func centre(str, padding string, width uint) (out string) {
+	if len(str) >= int(width) {
+		return str
+	}
+	padwidth := (int(width) - 2 - len(str)) / 2
+	for i := 0; i < padwidth; i += len(padding) {
+		out += padding
+	}
+	out += fmt.Sprintf(" %s ", str)
+	if len(str)%2 == 1 {
+		padwidth++
+	}
+	for i := 0; i < padwidth; i += len(padding) {
+		out += padding
+	}
+	return
+}
+
 func main() {
 	headings := os.Args[1:]
-	width := 30
+	width := flag.Uint("width", 30, "The width you want your headings padded to")
+	padding := flag.String("padding", "=", "The string to use as padding.")
 
 	for _, h := range headings {
-		equals := width - (len(h) / 2)
-		for i := 0; i < equals; i++ {
-			fmt.Print("=")
-		}
-		fmt.Printf(" %s ", h)
-		if len(h)%2 == 0 {
-			equals++
-		}
-		for i := 0; i < equals; i++ {
-			fmt.Print("=")
-		}
-		fmt.Printf("\r\n")
+		fmt.Println(centre(h, *padding, *width))
 	}
 
 }
