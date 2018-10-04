@@ -50,6 +50,9 @@ func main() {
 
 	headings := flag.Args()
 
+	flag.Parse()
+	headings := flag.Args()
+
 	for _, h := range headings {
 		fmt.Println(centre(h, *padding, *width))
 	}
