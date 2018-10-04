@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
 )
 
 func centre(str, padding string, width uint) string {
@@ -45,9 +44,11 @@ func centre(str, padding string, width uint) string {
 }
 
 func main() {
-	headings := os.Args[1:]
 	width := flag.Uint("width", 30, "The width you want your headings padded to")
 	padding := flag.String("padding", "=", "The string to use as padding.")
+	flag.Parse()
+
+	headings := flag.Args()
 
 	for _, h := range headings {
 		fmt.Println(centre(h, *padding, *width))
